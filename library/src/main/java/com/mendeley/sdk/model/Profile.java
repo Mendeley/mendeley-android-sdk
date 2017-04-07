@@ -88,6 +88,7 @@ public class Profile implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int flags) {
+        ParcelableUtils.writeOptionalBooleanToParcel(parcel, isMe);
         parcel.writeString(id);
         ParcelableUtils.writeOptionalStringToParcel(parcel, displayName);
         ParcelableUtils.writeOptionalStringToParcel(parcel, userType);
@@ -113,6 +114,7 @@ public class Profile implements Parcelable {
         @Override
         public Profile createFromParcel(Parcel in) {
             Profile.Builder builder = new Profile.Builder()
+                    .setIsMe(ParcelableUtils.readOptionalBooleanFromParcel(in))
                     .setId(in.readString())
                     .setDisplayName(ParcelableUtils.readOptionalStringFromParcel(in))
                     .setUserType(ParcelableUtils.readOptionalStringFromParcel(in))
