@@ -17,4 +17,13 @@ android {
     lintOptions {
         abortOnError false
     }
+
+
+    productFlavors{
+        staging{
+
+        }
+        production{
+        }
+    }
 }
