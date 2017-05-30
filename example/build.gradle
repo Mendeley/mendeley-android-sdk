@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    compile project(path: ':mendeley_sdk', configuration: 'productionRelease')
+    compile project(path: ':mendeley_sdk')
 }
 
 android {
@@ -19,11 +19,14 @@ android {
     }
 
 
+    flavorDimensions "default"
+
     productFlavors{
         staging{
-
+            dimension "default"
         }
         production{
+            dimension "default"
         }
     }
 }

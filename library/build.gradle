@@ -31,11 +31,15 @@ android {
 
     // Ref: http://stackoverflow.com/questions/24860659/multi-flavor-app-based-on-multi-flavor-library-in-android-gradle
     publishNonDefault true
+    flavorDimensions "default"
+
     productFlavors{
         staging{
+            dimension "default"
             buildConfigField 'String', 'WEB_API_BASE_URL', '\"https://api-staging.mendeley.com/\"'
         }
         production{
+            dimension "default"
             buildConfigField 'String', 'WEB_API_BASE_URL', '\"https://api.mendeley.com/\"'
         }
     }
