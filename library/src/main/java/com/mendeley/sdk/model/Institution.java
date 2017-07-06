@@ -45,7 +45,7 @@ public class Institution implements Parcelable{
             builder.setUrls(urls);
 
             final List<AlternativeName> alternativeNames = new ArrayList<>();
-            in.readList(urls, AlternativeName.class.getClassLoader());
+            in.readList(alternativeNames, AlternativeName.class.getClassLoader());
             builder.setAltNames(alternativeNames);
 
             return builder.build();
