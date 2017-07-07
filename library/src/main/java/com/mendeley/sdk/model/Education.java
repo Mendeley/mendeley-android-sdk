@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * Model class representing education json object.
  */
-public class Education implements Parcelable, Comparable<Education> {
+public class Education implements Parcelable {
 
     public final String id;
     public final Institution institution;
@@ -68,23 +68,6 @@ public class Education implements Parcelable, Comparable<Education> {
         this.startDate = startDate;
         this.endDate = endDate;
         this.website = website;
-    }
-
-    @Override
-    public int compareTo(final Education education) {
-        if (endDate == null & education.endDate == null) {
-            return 0;
-        }
-
-        if (endDate == null & education.endDate != null) {
-            return education.endDate.compareTo(new Date());
-        }
-
-        if (education.endDate == null) {
-            return new Date().compareTo(endDate);
-        }
-
-        return education.endDate.compareTo(endDate);
     }
 
     public static class Builder {

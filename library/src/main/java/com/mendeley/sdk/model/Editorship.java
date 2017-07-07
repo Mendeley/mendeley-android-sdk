@@ -7,7 +7,7 @@ import com.mendeley.sdk.util.ParcelableUtils;
 
 import java.util.Date;
 
-public class Editorship implements Parcelable {
+public class Editorship implements Parcelable{
 
     public final String id;
     public final Date created;
@@ -110,4 +110,5 @@ public class Editorship implements Parcelable {
         ParcelableUtils.writeOptionalDateToParcel(parcel, startDate);
         ParcelableUtils.writeOptionalDateToParcel(parcel, endDate);
     }
+
 }

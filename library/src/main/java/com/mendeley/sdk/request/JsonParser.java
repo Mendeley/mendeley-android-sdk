@@ -1141,10 +1141,10 @@ public class JsonParser {
                 builder.setJournal(reader.nextString());
 
             } else if (key.equals("start_date")) {
-                builder.setCreated(DateUtils.parseYearMonthDayDate(reader.nextString()));
+                builder.setStartDate(DateUtils.parseYearMonthDayDate(reader.nextString()));
 
             } else if (key.equals("end_date")) {
-                builder.setCreated(DateUtils.parseYearMonthDayDate(reader.nextString()));
+                builder.setEndDate(DateUtils.parseYearMonthDayDate(reader.nextString()));
 
             } else {
                 reader.skipValue();
