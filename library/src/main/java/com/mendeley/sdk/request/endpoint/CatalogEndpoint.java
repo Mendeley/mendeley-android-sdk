@@ -44,8 +44,15 @@ public class CatalogEndpoint {
             return Uri.parse(CATALOG_BASE_URL).buildUpon().appendQueryParameter(identifier, value).build();
         }
 
+        private static Uri getGetCatalogDocumentUrl(String documentId) {
+            return Uri.parse(CATALOG_BASE_URL).buildUpon()
+                    .appendQueryParameter("document_id", documentId)
+                    .appendQueryParameter("view", "stats")
+                    .build();
+        }
+
         public GetCatalogDocumentRequest(String documentId, AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
-            super(getGetCatalogDocumentUrl("document_id", documentId), authTokenManager, clientCredentials);
+            super(getGetCatalogDocumentUrl(documentId), authTokenManager, clientCredentials);
         }
 
         public GetCatalogDocumentRequest(String identifier, String value, AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
