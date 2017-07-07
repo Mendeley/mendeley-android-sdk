@@ -2,7 +2,6 @@ package com.mendeley.sdk.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import com.mendeley.sdk.util.NullableList;
 import com.mendeley.sdk.util.ParcelableUtils;

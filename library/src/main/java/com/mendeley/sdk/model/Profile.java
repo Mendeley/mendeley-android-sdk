@@ -37,6 +37,8 @@ public class Profile implements Parcelable {
     public final Institution institutionDetails;
     public final NullableList<Education> education;
     public final NullableList<Employment> employment;
+    public final NullableList<Editorship> editorships;
+    public final NullableList<String> researchInterestsList;
 
     public Profile(
             String id,
@@ -57,6 +59,8 @@ public class Profile implements Parcelable {
             List<Education> education,
             Institution institutionDetails,
             List<Employment> employment,
+            List<Editorship> editorships,
+            List<String> researchInterestsList,
             boolean isMe) {
 
         this.id = id;
@@ -78,6 +82,8 @@ public class Profile implements Parcelable {
         this.institutionDetails = institutionDetails;
         this.education = new NullableList<>(education);
         this.employment = new NullableList<>(employment);
+        this.editorships = new NullableList<>(editorships);
+        this.researchInterestsList = new NullableList<>(researchInterestsList);
         this.isMe = isMe;
     }
 
@@ -108,6 +114,8 @@ public class Profile implements Parcelable {
         parcel.writeList(photos);
         parcel.writeList(education);
         parcel.writeList(employment);
+        parcel.writeTypedList(editorships);
+        parcel.writeStringList(researchInterestsList);
     }
 
     public static final Creator<Profile> CREATOR = new Creator<Profile>() {
@@ -143,6 +151,15 @@ public class Profile implements Parcelable {
             final List<Employment> employment = new ArrayList<>();
             in.readList(employment, Employment.class.getClassLoader());
             builder.setEmployment(employment);
+
+            final ArrayList<Editorship> editorships = new ArrayList<>();
+            in.readTypedList(editorships, Editorship.CREATOR);
+            builder.setEditorships(editorships);
+
+            final ArrayList<String> researchInterestsList = new ArrayList<>();
+            in.readStringList(researchInterestsList);
+            builder.setResearchInterestsList(researchInterestsList);
+
 
             return builder.build();
         }
@@ -181,6 +198,8 @@ public class Profile implements Parcelable {
         private Institution institutionDetails = new Institution.Builder().build();
         private String title;
         private boolean isMe;
+        private List<Editorship> editorships;
+        private List<String> researchInterestsList;
 
         public Builder() {
         }
@@ -206,6 +225,8 @@ public class Profile implements Parcelable {
             this.education = from.education == null ? new ArrayList<Education>() : from.education;
             this.employment = from.employment == null ? new ArrayList<Employment>() : from.employment;
             this.isMe = from.isMe;
+            this.editorships = from.editorships == null ? new ArrayList<Editorship>() : from.editorships;
+            this.researchInterestsList = from.researchInterestsList == null ? new ArrayList<String>() : from.researchInterestsList;
         }
 
         public Builder setId(String id) {
@@ -303,6 +324,16 @@ public class Profile implements Parcelable {
             return this;
         }
 
+        public Builder setEditorships(List<Editorship> editorships) {
+            this.editorships = editorships;
+            return this;
+        }
+
+        public Builder setResearchInterestsList(List<String> researchInterestsList) {
+            this.researchInterestsList = researchInterestsList;
+            return this;
+        }
+
         public Builder setIsMe(Boolean isMe) {
             this.isMe = isMe;
             return this;
@@ -329,6 +360,8 @@ public class Profile implements Parcelable {
                     education,
                     institutionDetails,
                     employment,
+                    editorships,
+                    researchInterestsList,
                     isMe);
         }
     }
