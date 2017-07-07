@@ -11,7 +11,7 @@ import java.util.Date;
  * Model class representing employment json object.
  *
  */
-public class Employment implements Parcelable {
+public class Employment implements Parcelable, Comparable<Employment> {
 
 	public final String id;
 	public final Institution institution;
@@ -74,6 +74,23 @@ public class Employment implements Parcelable {
 		this.endDate = endDate;
 		this.website = website;
 		this.isMainEmployment = isMainEmployment;
+	}
+
+	@Override
+	public int compareTo(final Employment employment) {
+		if (endDate == null & employment.endDate == null) {
+			return 0;
+		}
+
+		if (endDate == null & employment.endDate != null) {
+			return employment.endDate.compareTo(new Date());
+		}
+
+		if (employment.endDate == null) {
+			return new Date().compareTo(endDate);
+		}
+
+		return employment.endDate.compareTo(endDate);
 	}
 
 	public static class Builder {

@@ -137,7 +137,7 @@ public class Profile implements Parcelable {
             builder.setPhotos(photos);
 
             final List<Education> education = new ArrayList<>();
-            in.readList(education, Education.class.getClassLoader());
+            in.readList(education, getClass().getClassLoader());
             builder.setEducation(education);
 
             final List<Employment> employment = new ArrayList<>();
