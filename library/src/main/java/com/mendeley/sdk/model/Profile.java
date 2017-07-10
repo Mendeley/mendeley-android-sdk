@@ -26,6 +26,7 @@ public class Profile implements Parcelable {
     public final String researchInterests;
     public final String academicStatus;
     public final String title;
+    public final String biography;
     public final Boolean verified;
     public final Boolean marketing;
     public final Date createdAt;
@@ -49,7 +50,7 @@ public class Profile implements Parcelable {
             String link,
             String firstName,
             String lastName,
-            String title, String researchInterests,
+            String title, String biography, String researchInterests,
             String academicStatus,
             Boolean verified,
             Boolean marketing,
@@ -72,6 +73,7 @@ public class Profile implements Parcelable {
         this.firstName = firstName;
         this.lastName = lastName;
         this.title = title;
+        this.biography = biography;
         this.researchInterests = researchInterests;
         this.academicStatus = academicStatus;
         this.verified = verified;
@@ -106,6 +108,7 @@ public class Profile implements Parcelable {
         ParcelableUtils.writeOptionalStringToParcel(parcel, researchInterests);
         ParcelableUtils.writeOptionalStringToParcel(parcel, academicStatus);
         ParcelableUtils.writeOptionalStringToParcel(parcel, title);
+        ParcelableUtils.writeOptionalStringToParcel(parcel, biography);
         ParcelableUtils.writeOptionalBooleanToParcel(parcel, verified);
         ParcelableUtils.writeOptionalBooleanToParcel(parcel, marketing);
         ParcelableUtils.writeOptionalDateToParcel(parcel, createdAt);
@@ -134,6 +137,7 @@ public class Profile implements Parcelable {
                     .setResearchInterests(ParcelableUtils.readOptionalStringFromParcel(in))
                     .setAcademicStatus(ParcelableUtils.readOptionalStringFromParcel(in))
                     .setTitle(ParcelableUtils.readOptionalStringFromParcel(in))
+                    .setBiography(ParcelableUtils.readOptionalStringFromParcel(in))
                     .setVerified(ParcelableUtils.readOptionalBooleanFromParcel(in))
                     .setMarketing(ParcelableUtils.readOptionalBooleanFromParcel(in))
                     .setCreatedAt(ParcelableUtils.readOptionalDateFromParcel(in))
@@ -197,6 +201,7 @@ public class Profile implements Parcelable {
         private List<Employment> employment;
         private Institution institutionDetails = new Institution.Builder().build();
         private String title;
+        private String biography;
         private boolean isMe;
         private List<Editorship> editorships;
         private List<String> researchInterestsList;
@@ -214,6 +219,7 @@ public class Profile implements Parcelable {
             this.firstName = from.firstName;
             this.lastName = from.lastName;
             this.title = from.title;
+            this.biography = from.biography;
             this.researchInterests = from.researchInterests;
             this.academicStatus = from.academicStatus;
             this.verified = from.verified;
@@ -271,6 +277,11 @@ public class Profile implements Parcelable {
 
         public Builder setTitle(String title) {
             this.title = title;
+            return this;
+        }
+
+          public Builder setBiography(String biography) {
+            this.biography = biography;
             return this;
         }
 
@@ -350,6 +361,7 @@ public class Profile implements Parcelable {
                     firstName,
                     lastName,
                     title,
+                    biography,
                     researchInterests,
                     academicStatus,
                     verified,

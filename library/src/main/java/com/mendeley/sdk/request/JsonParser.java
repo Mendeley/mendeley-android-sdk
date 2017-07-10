@@ -76,6 +76,9 @@ public class JsonParser {
             } else if (key.equals("title")) {
                 builder.setTitle(reader.nextString());
 
+            } else if (key.equals("biography")) {
+                builder.setBiography(reader.nextString());
+
             } else if (key.equals("research_interests")) {
                 builder.setResearchInterests(reader.nextString());
 
@@ -1059,16 +1062,16 @@ public class JsonParser {
     }
 
     private static List<Editorship> editorshipsFromJsonFromJson(JsonReader reader) throws IOException, JSONException, ParseException {
-            final List<Editorship> list = new LinkedList<>();
-            reader.beginArray();
+        final List<Editorship> list = new LinkedList<>();
+        reader.beginArray();
 
-            while (reader.hasNext()) {
-                list.add(editorshipFromJson(reader));
-            }
-
-            reader.endArray();
-            return list;
+        while (reader.hasNext()) {
+            list.add(editorshipFromJson(reader));
         }
+
+        reader.endArray();
+        return list;
+    }
 
     public static List<Institution> institutionsFromJson(JsonReader reader) throws IOException, JSONException, ParseException {
         final List<Institution> list = new LinkedList<>();
