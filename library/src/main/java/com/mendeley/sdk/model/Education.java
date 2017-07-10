@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * Model class representing education json object.
  */
-public class Education implements Parcelable {
+public class Education implements Parcelable, Epochable {
 
     public final String id;
     public final Institution institution;
@@ -68,6 +68,16 @@ public class Education implements Parcelable {
         this.startDate = startDate;
         this.endDate = endDate;
         this.website = website;
+    }
+
+    @Override
+    public Date getStartDate() {
+        return this.startDate;
+    }
+
+    @Override
+    public Date getEndDate() {
+        return this.endDate;
     }
 
     public static class Builder {

@@ -7,7 +7,7 @@ import com.mendeley.sdk.util.ParcelableUtils;
 
 import java.util.Date;
 
-public class Editorship implements Parcelable{
+public class Editorship implements Parcelable, Epochable {
 
     public final String id;
     public final Date created;
@@ -25,6 +25,16 @@ public class Editorship implements Parcelable{
         this.endDate = endDate;
     }
 
+    @Override
+    public Date getStartDate() {
+        return this.startDate;
+    }
+
+    @Override
+    public Date getEndDate() {
+        return this.endDate;
+    }
+
     public static class Builder {
         private String id;
         private Date created;
@@ -33,7 +43,8 @@ public class Editorship implements Parcelable{
         private Date startDate;
         private Date endDate;
 
-        public Builder() {}
+        public Builder() {
+        }
 
         public Builder setId(String id) {
             this.id = id;
