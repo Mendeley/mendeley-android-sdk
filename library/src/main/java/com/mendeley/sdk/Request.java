@@ -36,12 +36,13 @@ public abstract class Request<ResultType> {
 
     private static Date parseHeaderDate(String serverDateStr) {
         try {
-            return httpHeaderDateFormat.parse(serverDateStr);
+            synchronized (httpHeaderDateFormat) {
+                return httpHeaderDateFormat.parse(serverDateStr);
+            }
         } catch (Exception e) {
             throw new IllegalArgumentException("Could not parse server date header", e);
         }
     }
-
 
     private final Uri uri;
     private boolean cancelled;

@@ -38,8 +38,10 @@ public class DateUtils {
         }
     }
 
-    public synchronized static Date parseYearMonthDayDate(String date) throws ParseException {
-        return yearMonthDateDateFormat.parse(date);
+    public static Date parseYearMonthDayDate(String date) throws ParseException {
+        synchronized (yearMonthDateDateFormat) {
+            return yearMonthDateDateFormat.parse(date);
+        }
     }
 
     public static String formatYearMonthDayDate(Date date) {
