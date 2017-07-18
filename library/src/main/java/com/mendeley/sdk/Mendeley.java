@@ -99,6 +99,12 @@ public class Mendeley {
         this.requestsFactory = new RequestFactoryImpl(authTokenManager, clientCredentials);
     }
 
+    public final void init(AuthTokenManager authTokenManager, String appId, String appSecret) {
+        this.clientCredentials = new ClientCredentials(appId, appSecret);
+        this.authTokenManager = authTokenManager;
+        this.requestsFactory = new RequestFactoryImpl(authTokenManager, clientCredentials);
+    }
+
     /**
      * Signs the user in.
      *
@@ -119,8 +125,7 @@ public class Mendeley {
      */
     public final void signIn(Activity activity) {
         assertInitialised();
-
-        activity.startActivityForResult(new Intent(activity, SignInActivity.class), SignInActivity.REQUEST_CODE);
+        authTokenManager.startSignInFlow(activity);
     }
 
 
@@ -553,6 +558,11 @@ public class Mendeley {
             editor.remove(EXPIRES_AT_KEY);
             editor.remove(TOKEN_TYPE_KEY);
             editor.commit();
+        }
+
+        @Override
+        public void startSignInFlow(Activity activity) {
+            activity.startActivityForResult(new Intent(activity, SignInActivity.class), SignInActivity.REQUEST_CODE);
         }
 
         @Override

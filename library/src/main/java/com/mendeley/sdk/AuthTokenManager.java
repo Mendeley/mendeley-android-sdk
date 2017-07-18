@@ -16,6 +16,8 @@
 
 package com.mendeley.sdk;
 
+import android.app.Activity;
+
 import java.util.Date;
 
 /**
@@ -64,5 +66,7 @@ public interface AuthTokenManager {
      * end up with an authorization error.
      */
     void clearTokens();
+
+    public void startSignInFlow(Activity activity);
 
 }
