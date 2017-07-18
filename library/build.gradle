@@ -11,6 +11,13 @@ dependencies {
     }
 }
 
+configurations {
+    stagingDebugCompile
+    stagingReleaseCompile
+    productionDebugCompile
+    productionReleaseCompile
+}
+
 android {
     compileSdkVersion 23
     buildToolsVersion '25.0.0'
@@ -37,6 +44,17 @@ android {
         }
         production{
             buildConfigField 'String', 'WEB_API_BASE_URL', '\"https://api.mendeley.com/\"'
+        }
+    }
+
+    buildTypes {
+
+        debug {
+
+        }
+
+        release {
+
         }
     }
 }

@@ -1,7 +1,17 @@
 apply plugin: 'com.android.application'
 
+configurations {
+    stagingDebugCompile
+    stagingReleaseCompile
+    productionDebugCompile
+    productionReleaseCompile
+}
+
 dependencies {
-    compile project(path: ':mendeley_sdk', configuration: 'productionRelease')
+    stagingDebugCompile project(path: ':mendeley_sdk', configuration: 'stagingDebug')
+    stagingReleaseCompile project(path: ':mendeley_sdk', configuration: 'stagingRelease')
+    productionDebugCompile project(path: ':mendeley_sdk', configuration: 'productionDebug')
+    productionReleaseCompile project(path: ':mendeley_sdk', configuration: 'productionRelease')
 }
 
 android {
@@ -24,6 +34,17 @@ android {
 
         }
         production{
+        }
+    }
+
+    buildTypes {
+
+        debug {
+
+        }
+
+        release {
+
         }
     }
 }
