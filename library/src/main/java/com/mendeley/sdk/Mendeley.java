@@ -99,8 +99,7 @@ public class Mendeley {
         this.requestsFactory = new RequestFactoryImpl(authTokenManager, clientCredentials);
     }
 
-    public final void init(AuthTokenManager authTokenManager, String appId, String appSecret) {
-        this.clientCredentials = new ClientCredentials(appId, appSecret);
+    public final void init(AuthTokenManager authTokenManager) {
         this.authTokenManager = authTokenManager;
         this.requestsFactory = new RequestFactoryImpl(authTokenManager, clientCredentials);
     }

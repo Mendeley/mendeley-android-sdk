@@ -2,6 +2,7 @@ package com.mendeley.sdk;
 
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.mendeley.sdk.exceptions.MendeleyException;
 import com.mendeley.sdk.exceptions.UserCancelledException;
@@ -36,13 +37,12 @@ public abstract class Request<ResultType> {
 
     private static Date parseHeaderDate(String serverDateStr) {
         try {
-            synchronized (httpHeaderDateFormat) {
-                return httpHeaderDateFormat.parse(serverDateStr);
-            }
+            return httpHeaderDateFormat.parse(serverDateStr);
         } catch (Exception e) {
             throw new IllegalArgumentException("Could not parse server date header", e);
         }
     }
+
 
     private final Uri uri;
     private boolean cancelled;
@@ -171,10 +171,22 @@ public abstract class Request<ResultType> {
          */
         public final Date serverDate;
 
-        public Response(ResultType resource, Date serverDate, Uri next) {
+
+        public final int responseCode;
+
+        public Response(ResultType resource, Date serverDate, Uri next, int responseCode) {
             this.resource = resource;
             this.next = next;
             this.serverDate = serverDate;
+            this.responseCode = responseCode;
+        }
+
+        public Response(ResultType resource, Date serverDate, Uri next) {
+            this(resource, serverDate, next, -1);
+        }
+
+        public Response(ResultType resource, String serverDateStr, Uri next, int responseCode) {
+            this(resource, parseHeaderDate(serverDateStr), next, responseCode);
         }
 
         public Response(ResultType resource, String serverDateStr, Uri next) {
@@ -186,7 +198,6 @@ public abstract class Request<ResultType> {
         }
 
     }
-
 
     /**
      * Callback used when the {@link Request} is executed asynchronously.
