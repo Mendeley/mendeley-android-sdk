@@ -41,6 +41,8 @@ import static com.mendeley.sdk.model.Annotation.PrivacyLevel;
  */
 public class JsonParser {
 
+    private static final String AUTO_LINK_UNVERIFIED = "UNVERIFIED";
+
     public static Profile profileFromJson(JsonReader reader) throws JSONException, IOException, ParseException {
         final Profile.Builder builder = new Profile.Builder();
 
@@ -51,6 +53,12 @@ public class JsonParser {
             final String key = reader.nextName();
             if (key.equals("id")) {
                 builder.setId(reader.nextString());
+            } else if (key.equals("profile_uuid")) {
+                if (builder.getId() == null) {
+                    builder.setId(reader.nextString());
+                } else {
+                    reader.skipValue();
+                }
 
             } else if (key.equals("display_name")) {
                 builder.setDisplayName(reader.nextString());
@@ -87,6 +95,12 @@ public class JsonParser {
 
             } else if (key.equals("verified")) {
                 builder.setVerified(reader.nextBoolean());
+            } else if (key.equals("autolink_verification_status")) {
+                if (builder.getVerified() == null) {
+                    builder.setVerified(autolinkVerificationFromJson(reader.nextString()));
+                } else {
+                    reader.skipValue();
+                }
 
             } else if (key.equals("marketing")) {
                 builder.setMarketing(reader.nextBoolean());
@@ -123,6 +137,10 @@ public class JsonParser {
         reader.endObject();
 
         return builder.build();
+    }
+
+    private static Boolean autolinkVerificationFromJson(String autolinkVerificationStatus) {
+        return !autolinkVerificationStatus.equals(AUTO_LINK_UNVERIFIED);
     }
 
     public static List<Profile.Photo> profilePhotosFromJson(JsonReader reader) throws IOException, JSONException, ParseException {

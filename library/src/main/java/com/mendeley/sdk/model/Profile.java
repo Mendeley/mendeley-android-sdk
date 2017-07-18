@@ -240,6 +240,10 @@ public class Profile implements Parcelable {
             return this;
         }
 
+        public String getId() {
+            return id;
+        }
+
         public Builder setDisplayName(String displayName) {
             this.displayName = displayName;
             return this;
@@ -298,6 +302,10 @@ public class Profile implements Parcelable {
         public Builder setVerified(Boolean verified) {
             this.verified = verified;
             return this;
+        }
+
+        public Boolean getVerified() {
+            return verified;
         }
 
         public Builder setMarketing(Boolean marketing) {
