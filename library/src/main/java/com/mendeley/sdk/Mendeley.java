@@ -94,16 +94,16 @@ public class Mendeley {
      */
     public final void init(Context context, String appId, String appSecret) {
         this.authManager = SharedPreferencesAuthManager.obtain(context, new ClientCredentials(appId, appSecret));
-        initRequetsFactory(authManager);
+        initRequestsFactory(authManager);
     }
 
     public final void init(AuthManager authManager) {
         this.authManager = authManager;
-        initRequetsFactory(authManager);
+        initRequestsFactory(authManager);
     }
 
 
-    private void initRequetsFactory(AuthManager authManager) {
+    private void initRequestsFactory(AuthManager authManager) {
         this.requestsFactory = new RequestFactoryImpl(authManager, authManager.getClientCredentials());
     }
 
