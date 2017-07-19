@@ -3,8 +3,8 @@ package com.mendeley.sdk.request.endpoint;
 import android.net.Uri;
 import android.util.JsonReader;
 
+import com.mendeley.sdk.AuthManager;
 import com.mendeley.sdk.ClientCredentials;
-import com.mendeley.sdk.AuthTokenManager;
 import com.mendeley.sdk.Request;
 import com.mendeley.sdk.exceptions.FileDownloadException;
 import com.mendeley.sdk.model.File;
@@ -49,12 +49,12 @@ public class FilesEndpoint {
             return params.appendToUi(bld.build());
         }
 
-        public GetFilesRequest(Uri url, AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
-            super(url, authTokenManager, clientCredentials);
+        public GetFilesRequest(Uri url, AuthManager authManager, ClientCredentials clientCredentials) {
+            super(url, authManager, clientCredentials);
         }
 
-        public GetFilesRequest(FileRequestParameters parameters, AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
-            this(getGetFilesUrl(parameters), authTokenManager, clientCredentials);
+        public GetFilesRequest(FileRequestParameters parameters, AuthManager authManager, ClientCredentials clientCredentials) {
+            this(getGetFilesUrl(parameters), authManager, clientCredentials);
         }
 
         @Override
@@ -81,8 +81,8 @@ public class FilesEndpoint {
         private final String fileId;
         private final java.io.File targetFile;
 
-        public GetFileBinaryRequest(String fileId, java.io.File targetFile, AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
-            super(Uri.parse(filesUrl + "/" + fileId), authTokenManager, clientCredentials);
+        public GetFileBinaryRequest(String fileId, java.io.File targetFile, AuthManager authManager, ClientCredentials clientCredentials) {
+            super(Uri.parse(filesUrl + "/" + fileId), authManager, clientCredentials);
             this.fileId = fileId;
             this.targetFile = targetFile;
         }
@@ -129,8 +129,8 @@ public class FilesEndpoint {
 
         private static String filesUrl = MENDELEY_API_BASE_URL + "files";
 
-        public PostFileWithBinaryRequest(String contentType, String documentId, String fileName, InputStream inputStream, AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
-            super(Uri.parse(filesUrl), authTokenManager, clientCredentials);
+        public PostFileWithBinaryRequest(String contentType, String documentId, String fileName, InputStream inputStream, AuthManager authManager, ClientCredentials clientCredentials) {
+            super(Uri.parse(filesUrl), authManager, clientCredentials);
             this.contentType = contentType;
             this.documentId = documentId;
             this.fileName = fileName;
@@ -164,8 +164,8 @@ public class FilesEndpoint {
     }
 
     public static class DeleteFileRequest extends DeleteAuthorizedRequest<Void> {
-        public DeleteFileRequest(String fileId, AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
-            super(Uri.parse(FILES_BASE_URL + "/" + fileId), authTokenManager, clientCredentials);
+        public DeleteFileRequest(String fileId, AuthManager authManager, ClientCredentials clientCredentials) {
+            super(Uri.parse(FILES_BASE_URL + "/" + fileId), authManager, clientCredentials);
         }
     }
 

@@ -155,7 +155,7 @@ public class SignInActivity extends Activity {
 	}
 
 	private void obtainAccessTokenFromAuthorizationCode(String authorizationCode) {
-		final OAuthTokenEndpoint.AccessTokenWithAuthorizationCodeRequest request = new OAuthTokenEndpoint.AccessTokenWithAuthorizationCodeRequest(mendeley.getAuthTokenManager(), mendeley.getClientCredentials(), authorizationCode);
+		final OAuthTokenEndpoint.AccessTokenWithAuthorizationCodeRequest request = new OAuthTokenEndpoint.AccessTokenWithAuthorizationCodeRequest(mendeley.getAuthManager(), mendeley.getClientCredentials(), authorizationCode);
 		request.runAsync(new Request.RequestCallback<Void>() {
 			@Override
 			public void onSuccess(Void aVoid, Uri next, Date serverDate) {

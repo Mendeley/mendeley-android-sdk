@@ -1,6 +1,6 @@
 package com.mendeley.sdk.testUtils;
 
-import com.mendeley.sdk.AuthTokenManager;
+import com.mendeley.sdk.AuthManager;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -13,7 +13,7 @@ import java.util.Date;
  * <p>
  * Developer applications should not use this class.
  */
-public class InMemoryAuthTokenManager implements AuthTokenManager {
+public class InMemoryAuthManager implements AuthManager {
 
     private String accessToken; // null if not set
     private String refreshToken;

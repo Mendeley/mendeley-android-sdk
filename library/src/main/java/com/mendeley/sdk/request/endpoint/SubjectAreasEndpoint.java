@@ -3,7 +3,7 @@ package com.mendeley.sdk.request.endpoint;
 import android.net.Uri;
 import android.util.JsonReader;
 
-import com.mendeley.sdk.AuthTokenManager;
+import com.mendeley.sdk.AuthManager;
 import com.mendeley.sdk.ClientCredentials;
 import com.mendeley.sdk.Request;
 import com.mendeley.sdk.request.GetAuthorizedRequest;
@@ -29,8 +29,8 @@ public class SubjectAreasEndpoint {
 	public static String SUBJECT_AREAS_URL = MENDELEY_API_BASE_URL + "subject_areas/";
 
     public static class GetSubjectAreasRequest extends GetAuthorizedRequest<List<String>> {
-        public GetSubjectAreasRequest(AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
-            super(Uri.parse(SUBJECT_AREAS_URL), authTokenManager, clientCredentials);
+        public GetSubjectAreasRequest(AuthManager authManager, ClientCredentials clientCredentials) {
+            super(Uri.parse(SUBJECT_AREAS_URL), authManager, clientCredentials);
         }
 
         @Override

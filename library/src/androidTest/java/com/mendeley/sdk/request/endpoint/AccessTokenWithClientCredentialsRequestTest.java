@@ -6,7 +6,7 @@ import android.test.suitebuilder.annotation.SmallTest;
 
 import com.mendeley.sdk.ClientCredentials;
 import com.mendeley.sdk.testUtils.ClientCredentialsFromAssetsFactory;
-import com.mendeley.sdk.testUtils.InMemoryAuthTokenManager;
+import com.mendeley.sdk.testUtils.InMemoryAuthManager;
 
 import junit.framework.Assert;
 
@@ -16,7 +16,7 @@ import java.util.Map;
 public class AccessTokenWithClientCredentialsRequestTest extends AndroidTestCase {
 
     private ClientCredentials clientCredentials;
-    private InMemoryAuthTokenManager authTokenManager;
+    private InMemoryAuthManager authTokenManager;
 
     @Override
     protected void setUp() throws Exception {
@@ -25,7 +25,7 @@ public class AccessTokenWithClientCredentialsRequestTest extends AndroidTestCase
         final AssetManager assetManager =  getContext().getAssets();
         clientCredentials = ClientCredentialsFromAssetsFactory.create(assetManager);
 
-        authTokenManager = new InMemoryAuthTokenManager();
+        authTokenManager = new InMemoryAuthManager();
     }
 
     @SmallTest

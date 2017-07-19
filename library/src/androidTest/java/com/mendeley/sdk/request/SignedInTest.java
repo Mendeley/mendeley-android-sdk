@@ -3,9 +3,9 @@ package com.mendeley.sdk.request;
 import android.content.res.AssetManager;
 import android.test.AndroidTestCase;
 
-import com.mendeley.sdk.AuthTokenManager;
+import com.mendeley.sdk.AuthManager;
 import com.mendeley.sdk.ClientCredentials;
-import com.mendeley.sdk.testUtils.InMemoryAuthTokenManager;
+import com.mendeley.sdk.testUtils.InMemoryAuthManager;
 import com.mendeley.sdk.Mendeley;
 import com.mendeley.sdk.RequestsFactory;
 import com.mendeley.sdk.request.endpoint.DocumentEndpoint;
@@ -23,7 +23,7 @@ public abstract class SignedInTest extends AndroidTestCase {
 
     private RequestsFactory requestsFactory;
     private ClientCredentials clientCredentials;
-    private AuthTokenManager authTokenManager;
+    private AuthManager authManager;
 
     private TestAccountSetupUtils testAccountSetupUtils;
     private Random random;
@@ -34,14 +34,14 @@ public abstract class SignedInTest extends AndroidTestCase {
 
         final AssetManager assetManager =  getContext().getAssets();
         clientCredentials = ClientCredentialsFromAssetsFactory.create(assetManager);
-        authTokenManager = new InMemoryAuthTokenManager();
+        authManager = new InMemoryAuthManager();
 
         // sign in
         final EmailAndPasswordFromAssetsFactory.UsernameAndPassword usernameAndPassword = EmailAndPasswordFromAssetsFactory.create(assetManager);
-        new OAuthTokenEndpoint.AccessTokenWithPasswordRequest(authTokenManager, clientCredentials, usernameAndPassword.username, usernameAndPassword.password).run();
+        new OAuthTokenEndpoint.AccessTokenWithPasswordRequest(authManager, clientCredentials, usernameAndPassword.username, usernameAndPassword.password).run();
 
-        requestsFactory = new Mendeley.RequestFactoryImpl(authTokenManager, clientCredentials);
-        testAccountSetupUtils = new TestAccountSetupUtils(authTokenManager, clientCredentials, requestsFactory);
+        requestsFactory = new Mendeley.RequestFactoryImpl(authManager, clientCredentials);
+        testAccountSetupUtils = new TestAccountSetupUtils(authManager, clientCredentials, requestsFactory);
 
         // reset account
         testAccountSetupUtils.cleanAll();
@@ -52,8 +52,8 @@ public abstract class SignedInTest extends AndroidTestCase {
         return requestsFactory;
     }
 
-    protected final AuthTokenManager getAuthTokenManager() {
-        return authTokenManager;
+    protected final AuthManager getAuthManager() {
+        return authManager;
     }
 
     protected final ClientCredentials getClientCredentials() {

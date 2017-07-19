@@ -4,7 +4,7 @@ import android.net.Uri;
 import android.util.JsonReader;
 
 import com.mendeley.sdk.ClientCredentials;
-import com.mendeley.sdk.AuthTokenManager;
+import com.mendeley.sdk.AuthManager;
 import com.mendeley.sdk.Request;
 import com.mendeley.sdk.model.Document;
 import com.mendeley.sdk.request.DeleteAuthorizedRequest;
@@ -40,12 +40,12 @@ public class TrashEndpoint {
             return (params != null) ? params.appendToUi(uri) : uri;
         }
 
-        public GetTrashedDocumentsRequest(Uri url, AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
-            super(url, authTokenManager, clientCredentials);
+        public GetTrashedDocumentsRequest(Uri url, AuthManager authManager, ClientCredentials clientCredentials) {
+            super(url, authManager, clientCredentials);
         }
 
-        public GetTrashedDocumentsRequest(DocumentEndpoint.DocumentRequestParameters parameters, AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
-            super(getTrashDocumentsUrl(parameters), authTokenManager, clientCredentials);
+        public GetTrashedDocumentsRequest(DocumentEndpoint.DocumentRequestParameters parameters, AuthManager authManager, ClientCredentials clientCredentials) {
+            super(getTrashDocumentsUrl(parameters), authManager, clientCredentials);
         }
 
         @Override
@@ -62,14 +62,14 @@ public class TrashEndpoint {
     }
 
     public static class DeleteTrashedDocumentRequest extends DeleteAuthorizedRequest<Void> {
-        public DeleteTrashedDocumentRequest(String documentId,  AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
-            super(Uri.parse(BASE_URL).buildUpon().appendPath(documentId).build(), authTokenManager, clientCredentials);
+        public DeleteTrashedDocumentRequest(String documentId, AuthManager authManager, ClientCredentials clientCredentials) {
+            super(Uri.parse(BASE_URL).buildUpon().appendPath(documentId).build(), authManager, clientCredentials);
         }
     }
 
     public static class RestoreTrashedDocumentRequest extends PostAuthorizedRequest<Void> {
-        public RestoreTrashedDocumentRequest(String documentId, AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
-            super(Uri.parse(BASE_URL).buildUpon().appendPath(documentId).appendPath("restore").build(), authTokenManager, clientCredentials);
+        public RestoreTrashedDocumentRequest(String documentId, AuthManager authManager, ClientCredentials clientCredentials) {
+            super(Uri.parse(BASE_URL).buildUpon().appendPath(documentId).appendPath("restore").build(), authManager, clientCredentials);
         }
 
         @Override

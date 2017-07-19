@@ -12,7 +12,7 @@ public class DeleteAuthorizedRequestTest extends AuthorizedRequestTest {
 
     @Override
     protected AuthorizedRequest<JSONObject> createRequest() {
-        return new DeleteAuthorizedRequest<JSONObject>(Uri.parse("https://httpbin.org/delete"), getAuthTokenManager(), getClientCredentials()) {
+        return new DeleteAuthorizedRequest<JSONObject>(Uri.parse("https://httpbin.org/delete"), getAuthManager(), getClientCredentials()) {
             @Override
             protected JSONObject manageResponse(InputStream is) throws Exception {
                 String responseString = readInputStream(is);

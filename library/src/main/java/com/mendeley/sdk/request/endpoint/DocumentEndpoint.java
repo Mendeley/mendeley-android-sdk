@@ -3,8 +3,8 @@ package com.mendeley.sdk.request.endpoint;
 import android.net.Uri;
 import android.util.JsonReader;
 
+import com.mendeley.sdk.AuthManager;
 import com.mendeley.sdk.ClientCredentials;
-import com.mendeley.sdk.AuthTokenManager;
 import com.mendeley.sdk.Request;
 import com.mendeley.sdk.model.Document;
 import com.mendeley.sdk.request.DeleteAuthorizedRequest;
@@ -41,12 +41,12 @@ public class DocumentEndpoint {
 
 
     public static class GetDocumentsRequest extends GetAuthorizedRequest<List<Document>> {
-        public GetDocumentsRequest(Uri url, AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
-            super(url, authTokenManager, clientCredentials);
+        public GetDocumentsRequest(Uri url, AuthManager authManager, ClientCredentials clientCredentials) {
+            super(url, authManager, clientCredentials);
         }
 
-        public GetDocumentsRequest(DocumentEndpoint.DocumentRequestParameters params, AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
-            super(params != null ? params.appendToUi(Uri.parse(DOCUMENTS_BASE_URL)) : Uri.parse(DOCUMENTS_BASE_URL), authTokenManager, clientCredentials);
+        public GetDocumentsRequest(DocumentEndpoint.DocumentRequestParameters params, AuthManager authManager, ClientCredentials clientCredentials) {
+            super(params != null ? params.appendToUi(Uri.parse(DOCUMENTS_BASE_URL)) : Uri.parse(DOCUMENTS_BASE_URL), authManager, clientCredentials);
         }
 
         @Override
@@ -76,8 +76,8 @@ public class DocumentEndpoint {
             return Uri.parse(url.toString());
         }
 
-        public GetDocumentRequest(String documentId, DocumentRequestParameters.View view, AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
-            super(getGetDocumentUrl(documentId, view), authTokenManager, clientCredentials);
+        public GetDocumentRequest(String documentId, DocumentRequestParameters.View view, AuthManager authManager, ClientCredentials clientCredentials) {
+            super(getGetDocumentUrl(documentId, view), authManager, clientCredentials);
         }
 
         @Override
@@ -97,8 +97,8 @@ public class DocumentEndpoint {
 
         final private Document doc;
 
-        public PostDocumentRequest(Document doc, AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
-            super(Uri.parse(DOCUMENTS_BASE_URL), authTokenManager, clientCredentials);
+        public PostDocumentRequest(Document doc, AuthManager authManager, ClientCredentials clientCredentials) {
+            super(Uri.parse(DOCUMENTS_BASE_URL), authManager, clientCredentials);
             this.doc = doc;
         }
 
@@ -124,8 +124,8 @@ public class DocumentEndpoint {
 
         private final Document document;
 
-        public PatchDocumentAuthorizedRequest(String documentId, Document document, Date date, AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
-            super(Uri.parse(DOCUMENTS_BASE_URL + "/" + documentId), date, authTokenManager, clientCredentials);
+        public PatchDocumentAuthorizedRequest(String documentId, Document document, Date date, AuthManager authManager, ClientCredentials clientCredentials) {
+            super(Uri.parse(DOCUMENTS_BASE_URL + "/" + documentId), date, authManager, clientCredentials);
             this.document = document;
         }
 
@@ -148,8 +148,8 @@ public class DocumentEndpoint {
     }
 
     public static class TrashDocumentRequest extends PostAuthorizedRequest<Void> {
-        public TrashDocumentRequest(String documentId,  AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
-            super(Uri.parse(DOCUMENTS_BASE_URL + "/" + documentId + "/trash"), authTokenManager, clientCredentials);
+        public TrashDocumentRequest(String documentId, AuthManager authManager, ClientCredentials clientCredentials) {
+            super(Uri.parse(DOCUMENTS_BASE_URL + "/" + documentId + "/trash"), authManager, clientCredentials);
         }
 
         @Override
@@ -165,8 +165,8 @@ public class DocumentEndpoint {
 
     public static class DeleteDocumentRequest extends DeleteAuthorizedRequest<Void> {
 
-        public DeleteDocumentRequest(String documentId,  AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
-            super(Uri.parse(DOCUMENTS_BASE_URL + "/" + documentId), authTokenManager, clientCredentials);
+        public DeleteDocumentRequest(String documentId, AuthManager authManager, ClientCredentials clientCredentials) {
+            super(Uri.parse(DOCUMENTS_BASE_URL + "/" + documentId), authManager, clientCredentials);
         }
     }
 

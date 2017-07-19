@@ -4,7 +4,7 @@ import android.content.res.AssetManager;
 import android.net.Uri;
 import android.util.JsonReader;
 
-import com.mendeley.sdk.AuthTokenManager;
+import com.mendeley.sdk.AuthManager;
 import com.mendeley.sdk.BuildConfig;
 import com.mendeley.sdk.ClientCredentials;
 import com.mendeley.sdk.Request;
@@ -54,13 +54,13 @@ import okhttp3.RequestBody;
 public class TestAccountSetupUtils {
 
     private final RequestsFactory requestFactory;
-    private final AuthTokenManager authTokenManager;
+    private final AuthManager authManager;
     private final ClientCredentials clientCredentials;
 
-    public TestAccountSetupUtils(AuthTokenManager authTokenManager, ClientCredentials clientCredentials, RequestsFactory requestFactory) {
+    public TestAccountSetupUtils(AuthManager authManager, ClientCredentials clientCredentials, RequestsFactory requestFactory) {
         this.clientCredentials = clientCredentials;
         this.requestFactory = requestFactory;
-        this.authTokenManager = authTokenManager;
+        this.authManager = authManager;
     }
 
     /**
@@ -81,11 +81,11 @@ public class TestAccountSetupUtils {
 
         for (Employment employment : currentMeProfile.employment) {
             final Uri deleteEmploymentUrl = Uri.parse(Request.MENDELEY_API_BASE_URL).buildUpon().appendPath("employment").appendPath(employment.id).build();
-            new DeleteAuthorizedRequest<Void>(deleteEmploymentUrl, authTokenManager, clientCredentials).run();
+            new DeleteAuthorizedRequest<Void>(deleteEmploymentUrl, authManager, clientCredentials).run();
         }
         for (Education education : currentMeProfile.education) {
             final Uri deleteEducationUrl = Uri.parse(Request.MENDELEY_API_BASE_URL).buildUpon().appendPath("education").appendPath(education.id).build();
-            new DeleteAuthorizedRequest<Void>(deleteEducationUrl, authTokenManager, clientCredentials).run();
+            new DeleteAuthorizedRequest<Void>(deleteEducationUrl, authManager, clientCredentials).run();
         }
 
         // patch the details of the profile
@@ -107,7 +107,7 @@ public class TestAccountSetupUtils {
                 .path("employment")
                 .build();
 
-        new PostAuthorizedRequest<Void>(url, authTokenManager, clientCredentials) {
+        new PostAuthorizedRequest<Void>(url, authManager, clientCredentials) {
 
             @Override
             protected RequestBody getBody() throws JSONException {
@@ -136,7 +136,7 @@ public class TestAccountSetupUtils {
                 .path("education")
                 .build();
 
-        new PostAuthorizedRequest<Void>(url, authTokenManager, clientCredentials) {
+        new PostAuthorizedRequest<Void>(url, authManager, clientCredentials) {
 
             @Override
             protected RequestBody getBody() throws JSONException {
@@ -246,7 +246,7 @@ public class TestAccountSetupUtils {
 
             con = (HttpsURLConnection) callUrl.openConnection();
             con.setRequestMethod("POST");
-            con.addRequestProperty("Authorization", "Bearer " + authTokenManager.getAccessToken());
+            con.addRequestProperty("Authorization", "Bearer " + authManager.getAccessToken());
             con.addRequestProperty("Content-type", "application/vnd.mendeley-recently-read.1+json");
 
             con.connect();
@@ -290,7 +290,7 @@ public class TestAccountSetupUtils {
 
             con = (HttpsURLConnection) callUrl.openConnection();
             con.setRequestMethod("GET");
-            con.addRequestProperty("Authorization", "Bearer " + authTokenManager.getAccessToken());
+            con.addRequestProperty("Authorization", "Bearer " + authManager.getAccessToken());
             con.addRequestProperty("Content-type", "application/vnd.mendeley-recently-read.1+json");
 
             con.connect();

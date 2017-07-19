@@ -26,7 +26,7 @@ import java.util.Date;
  *
  *  @{see http://dev.mendeley.com/}
  */
-public interface AuthTokenManager {
+public interface AuthManager {
 
     /**
      * @return the OAuth access token.
@@ -67,6 +67,7 @@ public interface AuthTokenManager {
      */
     void clearTokens();
 
-    public void startSignInFlow(Activity activity);
+    void startSignInFlow(Activity activity);
 
+    ClientCredentials getClientCredentials();
 }

@@ -3,7 +3,7 @@ package com.mendeley.sdk.request.endpoint;
 import android.net.Uri;
 import android.util.JsonReader;
 
-import com.mendeley.sdk.AuthTokenManager;
+import com.mendeley.sdk.AuthManager;
 import com.mendeley.sdk.ClientCredentials;
 import com.mendeley.sdk.Request;
 import com.mendeley.sdk.request.GetAuthorizedRequest;
@@ -29,8 +29,8 @@ public class UserRolesEndpoint {
 	public static String USER_ROLES_URL = MENDELEY_API_BASE_URL + "user_roles/";
 
     public static class GetUserRolesRequest extends GetAuthorizedRequest<List<String>> {
-        public GetUserRolesRequest(AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
-            super(Uri.parse(USER_ROLES_URL), authTokenManager, clientCredentials);
+        public GetUserRolesRequest(AuthManager authManager, ClientCredentials clientCredentials) {
+            super(Uri.parse(USER_ROLES_URL), authManager, clientCredentials);
         }
 
         @Override

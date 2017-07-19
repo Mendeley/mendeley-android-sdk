@@ -4,7 +4,7 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.util.JsonReader;
 
-import com.mendeley.sdk.AuthTokenManager;
+import com.mendeley.sdk.AuthManager;
 import com.mendeley.sdk.ClientCredentials;
 import com.mendeley.sdk.Request;
 import com.mendeley.sdk.model.Profile;
@@ -42,8 +42,8 @@ public class ProfilesEndpoint {
     }
 
     public static class GetProfileRequest extends GetAuthorizedRequest<Profile> {
-        public GetProfileRequest(String profileId, AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
-            super(Uri.parse(ProfilesEndpoint.PROFILES_URL + profileId), authTokenManager, clientCredentials);
+        public GetProfileRequest(String profileId, AuthManager authManager, ClientCredentials clientCredentials) {
+            super(Uri.parse(ProfilesEndpoint.PROFILES_URL + profileId), authManager, clientCredentials);
         }
 
         @Override
@@ -63,8 +63,8 @@ public class ProfilesEndpoint {
         private final Profile profile;
         private final String password;
 
-        public PostProfileRequest(AuthTokenManager authTokenManager, ClientCredentials clientCredentials, Profile profile, String password) {
-            super(Uri.parse(PROFILES_URL), authTokenManager, clientCredentials);
+        public PostProfileRequest(AuthManager authManager, ClientCredentials clientCredentials, Profile profile, String password) {
+            super(Uri.parse(PROFILES_URL), authManager, clientCredentials);
             this.profile = profile;
             this.password = password;
         }
@@ -90,8 +90,8 @@ public class ProfilesEndpoint {
     public static class PatchMeProfileRequest extends PatchAuthorizedRequest<Profile> {
         private final Profile profile;
 
-        public PatchMeProfileRequest(Profile profile, AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
-            super(Uri.parse(ProfilesEndpoint.PROFILES_URL + "me"), null, authTokenManager, clientCredentials);
+        public PatchMeProfileRequest(Profile profile, AuthManager authManager, ClientCredentials clientCredentials) {
+            super(Uri.parse(ProfilesEndpoint.PROFILES_URL + "me"), null, authManager, clientCredentials);
             this.profile = profile;
         }
 
@@ -118,8 +118,8 @@ public class ProfilesEndpoint {
 
     public static class DeleteProfileRequest extends DeleteAuthorizedRequest<Void> {
 
-        public DeleteProfileRequest(String profileId, AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
-            super(Uri.parse(PROFILES_URL + "/" + profileId), authTokenManager, clientCredentials);
+        public DeleteProfileRequest(String profileId, AuthManager authManager, ClientCredentials clientCredentials) {
+            super(Uri.parse(PROFILES_URL + "/" + profileId), authManager, clientCredentials);
         }
     }
 

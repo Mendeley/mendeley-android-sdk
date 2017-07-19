@@ -3,7 +3,7 @@ package com.mendeley.sdk.request;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import com.mendeley.sdk.AuthTokenManager;
+import com.mendeley.sdk.AuthManager;
 import com.mendeley.sdk.ClientCredentials;
 import com.mendeley.sdk.Request;
 import com.mendeley.sdk.exceptions.HttpResponseException;
@@ -25,25 +25,25 @@ public abstract class AuthorizedRequest<ResultType> extends Request<ResultType> 
     // Only use tokens which don't expire in the next 5 mins:
     private final static int MIN_TOKEN_VALIDITY_SEC = 300;
 
-    protected final AuthTokenManager authTokenManager;
+    protected final AuthManager authManager;
     protected final ClientCredentials clientCredentials;
 
     /**
      * Constructor
      *
      * @param url URI the request will be executed against
-     * @param authTokenManager used to get the access token
+     * @param authManager used to get the access token
      * @param clientCredentials used to refresh the access token, if needed
      */
-    public AuthorizedRequest(Uri url, AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
+    public AuthorizedRequest(Uri url, AuthManager authManager, ClientCredentials clientCredentials) {
         super(url);
-        this.authTokenManager = authTokenManager;
+        this.authManager = authManager;
         this.clientCredentials = clientCredentials;
     }
 
     @Override
     public final Response doRun() throws MendeleyException {
-        if (TextUtils.isEmpty(authTokenManager.getAccessToken())) {
+        if (TextUtils.isEmpty(authManager.getAccessToken())) {
             // Must call startSignInProcess first - caller error!
             throw new MendeleyException("No access token found");
         }
@@ -65,7 +65,7 @@ public abstract class AuthorizedRequest<ResultType> extends Request<ResultType> 
     }
 
     private void refreshExpiredToken() throws MendeleyException {
-        new OAuthTokenEndpoint.RefreshTokenRequest(authTokenManager, clientCredentials).run();
+        new OAuthTokenEndpoint.RefreshTokenRequest(authManager, clientCredentials).run();
     }
 
     /**
@@ -82,11 +82,11 @@ public abstract class AuthorizedRequest<ResultType> extends Request<ResultType> 
      * Checks if the current access token will expire soon (or isn't valid at all).
      */
     private boolean willExpireSoon() {
-        if (TextUtils.isEmpty(authTokenManager.getAccessToken()) || authTokenManager.getAuthTokenExpirationDate() == null) {
+        if (TextUtils.isEmpty(authManager.getAccessToken()) || authManager.getAuthTokenExpirationDate() == null) {
             return true;
         }
         Date now = new Date();
-        Date expires = authTokenManager.getAuthTokenExpirationDate();
+        Date expires = authManager.getAuthTokenExpirationDate();
         long timeToExpiryMs = expires.getTime() - now.getTime();
         long timeToExpirySec = TimeUnit.MILLISECONDS.toSeconds(timeToExpiryMs);
         return timeToExpirySec < MIN_TOKEN_VALIDITY_SEC;

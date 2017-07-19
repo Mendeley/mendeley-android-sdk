@@ -159,7 +159,7 @@ public class ProfileRequestTest extends SignedInTest {
                 .appendQueryParameter("hint", "Complutense")
                 .build();
 
-        return new GetAuthorizedRequest<List<Institution>>(url, getAuthTokenManager(), getClientCredentials()) {
+        return new GetAuthorizedRequest<List<Institution>>(url, getAuthManager(), getClientCredentials()) {
             @Override
             protected List<Institution> manageResponse(InputStream is) throws Exception {
                 final JsonReader reader = new JsonReader(new InputStreamReader(new BufferedInputStream(is)));

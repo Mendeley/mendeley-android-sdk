@@ -3,7 +3,7 @@ package com.mendeley.sdk.request.endpoint;
 
 import android.net.Uri;
 
-import com.mendeley.sdk.AuthTokenManager;
+import com.mendeley.sdk.AuthManager;
 import com.mendeley.sdk.ClientCredentials;
 import com.mendeley.sdk.Request;
 import com.mendeley.sdk.exceptions.HttpResponseException;
@@ -37,12 +37,12 @@ public class OAuthTokenEndpoint {
      */
     private static abstract class OAuthTokenRequest extends Request<Void> {
 
-        protected final AuthTokenManager authTokenManager;
+        protected final AuthManager authManager;
         protected final ClientCredentials clientCredentials;
 
-        public OAuthTokenRequest(AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
+        public OAuthTokenRequest(AuthManager authManager, ClientCredentials clientCredentials) {
             super(Uri.parse(TOKENS_URL));
-            this.authTokenManager = authTokenManager;
+            this.authManager = authManager;
             this.clientCredentials = clientCredentials;
         }
 
@@ -81,7 +81,7 @@ public class OAuthTokenEndpoint {
                     throw new HttpResponseException(responseCode, okHttpResponse.message(), url.toString(), responseBody.string(), okHttpResponse.header("X-Mendeley-Trace-Id"));
                 }
 
-                saveTokens(authTokenManager, responseBody.string());
+                saveTokens(authManager, responseBody.string());
                 final Map<String, List<String>> responseHeaders = okHttpResponse.headers().toMultimap();
                 return new Response(null, getServerDateString(responseHeaders));
 
@@ -116,7 +116,7 @@ public class OAuthTokenEndpoint {
         }
 
 
-        private void saveTokens(AuthTokenManager authTokenManager, String serverResponse) throws JsonParsingException {
+        private void saveTokens(AuthManager authManager, String serverResponse) throws JsonParsingException {
             try {
                 final JSONObject jsonResponse = new JSONObject(serverResponse);
                 final String accessToken = jsonResponse.getString("access_token");
@@ -124,7 +124,7 @@ public class OAuthTokenEndpoint {
                 final String tokenType = jsonResponse.getString("token_type");
                 final int expiresIn = jsonResponse.getInt("expires_in");
 
-                authTokenManager.saveTokens(accessToken, refreshToken, tokenType, expiresIn);
+                authManager.saveTokens(accessToken, refreshToken, tokenType, expiresIn);
             } catch (JSONException e) {
                 throw new JsonParsingException("Could not parse the server response with the access token", e);
             }
@@ -138,8 +138,8 @@ public class OAuthTokenEndpoint {
      */
     public static class AccessTokenWithClientCredentialsRequest extends OAuthTokenRequest {
 
-        public AccessTokenWithClientCredentialsRequest(AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
-            super(authTokenManager, clientCredentials);
+        public AccessTokenWithClientCredentialsRequest(AuthManager authManager, ClientCredentials clientCredentials) {
+            super(authManager, clientCredentials);
         }
 
         @Override
@@ -160,8 +160,8 @@ public class OAuthTokenEndpoint {
         private final String username;
         private final String password;
 
-        public AccessTokenWithPasswordRequest(AuthTokenManager authTokenManager, ClientCredentials clientCredentials, String username, String password) {
-            super(authTokenManager, clientCredentials);
+        public AccessTokenWithPasswordRequest(AuthManager authManager, ClientCredentials clientCredentials, String username, String password) {
+            super(authManager, clientCredentials);
             this.username = username;
             this.password = password;
         }
@@ -186,8 +186,8 @@ public class OAuthTokenEndpoint {
 
         private final String authorizationCode;
 
-        public AccessTokenWithAuthorizationCodeRequest(AuthTokenManager authTokenManager, ClientCredentials clientCredentials, String authorizationCode) {
-            super(authTokenManager, clientCredentials);
+        public AccessTokenWithAuthorizationCodeRequest(AuthManager authManager, ClientCredentials clientCredentials, String authorizationCode) {
+            super(authManager, clientCredentials);
             this.authorizationCode = authorizationCode;
         }
 
@@ -208,8 +208,8 @@ public class OAuthTokenEndpoint {
      */
     public static class RefreshTokenRequest extends OAuthTokenRequest {
 
-        public RefreshTokenRequest(AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
-            super(authTokenManager, clientCredentials);
+        public RefreshTokenRequest(AuthManager authManager, ClientCredentials clientCredentials) {
+            super(authManager, clientCredentials);
         }
 
         @Override
@@ -219,7 +219,7 @@ public class OAuthTokenEndpoint {
 
         @Override
         protected void appendOAuthParams(Map<String, String> oauthParams) {
-            oauthParams.put("refresh_token", authTokenManager.getRefreshToken());
+            oauthParams.put("refresh_token", authManager.getRefreshToken());
         }
     }
 }

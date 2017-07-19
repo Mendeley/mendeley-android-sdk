@@ -35,7 +35,7 @@ public abstract class AuthorizedRequestTest extends SignedInTest {
 
         final String actual = headersJson.getString("Authorization");
 
-        assertEquals("Authorization token sent", actual, "Bearer " + getAuthTokenManager().getAccessToken());
+        assertEquals("Authorization token sent", actual, "Bearer " + getAuthManager().getAccessToken());
     }
 
     @SmallTest

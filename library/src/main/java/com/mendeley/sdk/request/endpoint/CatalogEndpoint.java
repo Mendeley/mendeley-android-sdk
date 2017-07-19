@@ -3,16 +3,12 @@ package com.mendeley.sdk.request.endpoint;
 import android.net.Uri;
 import android.util.JsonReader;
 
-import com.mendeley.sdk.AuthTokenManager;
+import com.mendeley.sdk.AuthManager;
 import com.mendeley.sdk.ClientCredentials;
 import com.mendeley.sdk.Request;
 import com.mendeley.sdk.model.Document;
-import com.mendeley.sdk.model.Folder;
-import com.mendeley.sdk.request.DeleteAuthorizedRequest;
 import com.mendeley.sdk.request.GetAuthorizedRequest;
 import com.mendeley.sdk.request.JsonParser;
-import com.mendeley.sdk.request.PatchAuthorizedRequest;
-import com.mendeley.sdk.request.PostAuthorizedRequest;
 
 import org.json.JSONException;
 
@@ -23,9 +19,6 @@ import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
-
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 
 import static com.mendeley.sdk.Request.MENDELEY_API_BASE_URL;
 
@@ -51,12 +44,12 @@ public class CatalogEndpoint {
                     .build();
         }
 
-        public GetCatalogDocumentRequest(String documentId, AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
-            super(getGetCatalogDocumentUrl(documentId), authTokenManager, clientCredentials);
+        public GetCatalogDocumentRequest(String documentId, AuthManager authManager, ClientCredentials clientCredentials) {
+            super(getGetCatalogDocumentUrl(documentId), authManager, clientCredentials);
         }
 
-        public GetCatalogDocumentRequest(String identifier, String value, AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
-            super(getGetCatalogDocumentUrl(identifier, value), authTokenManager, clientCredentials);
+        public GetCatalogDocumentRequest(String identifier, String value, AuthManager authManager, ClientCredentials clientCredentials) {
+            super(getGetCatalogDocumentUrl(identifier, value), authManager, clientCredentials);
         }
 
         @Override

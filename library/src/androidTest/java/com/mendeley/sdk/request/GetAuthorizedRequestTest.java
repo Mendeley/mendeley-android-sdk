@@ -12,7 +12,7 @@ public class GetAuthorizedRequestTest extends AuthorizedRequestTest {
 
     @Override
     protected AuthorizedRequest<JSONObject> createRequest() {
-        return new GetAuthorizedRequest<JSONObject>(Uri.parse("https://httpbin.org/get"), getAuthTokenManager(), getClientCredentials()) {
+        return new GetAuthorizedRequest<JSONObject>(Uri.parse("https://httpbin.org/get"), getAuthManager(), getClientCredentials()) {
             @Override
             protected JSONObject manageResponse(InputStream is) throws Exception {
                 String responseString = readInputStream(is);
@@ -24,7 +24,7 @@ public class GetAuthorizedRequestTest extends AuthorizedRequestTest {
 //    @FlakyTest
 //    public void test_cancel_interruptsReadingFromTheInputStream() throws InterruptedException, MendeleyException {
 //        // GIVEN a request
-//        final Request<Integer> request = new GetAuthorizedRequest<Integer>(Uri.parse("http://mirror.internode.on.net/pub/test/5meg.test1"), getAuthTokenManager(), getClientCredentials()) {
+//        final Request<Integer> request = new GetAuthorizedRequest<Integer>(Uri.parse("http://mirror.internode.on.net/pub/test/5meg.test1"), getAuthManager(), getClientCredentials()) {
 //            @Override
 //            protected Integer manageResponse(InputStream is) throws Exception {
 //                int total = 0;

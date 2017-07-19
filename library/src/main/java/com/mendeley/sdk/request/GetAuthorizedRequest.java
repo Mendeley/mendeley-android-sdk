@@ -3,7 +3,7 @@ package com.mendeley.sdk.request;
 import android.net.Uri;
 
 import com.mendeley.sdk.ClientCredentials;
-import com.mendeley.sdk.AuthTokenManager;
+import com.mendeley.sdk.AuthManager;
 
 import org.json.JSONException;
 
@@ -14,8 +14,8 @@ import java.io.InputStream;
  */
 public abstract class GetAuthorizedRequest<ResultType> extends OkHttpAuthorizedRequest<ResultType> {
 
-    public GetAuthorizedRequest(Uri url, AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
-        super(url, authTokenManager, clientCredentials);
+    public GetAuthorizedRequest(Uri url, AuthManager authManager, ClientCredentials clientCredentials) {
+        super(url, authManager, clientCredentials);
     }
 
     @Override

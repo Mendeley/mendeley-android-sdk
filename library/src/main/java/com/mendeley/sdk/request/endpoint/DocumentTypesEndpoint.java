@@ -3,7 +3,7 @@ package com.mendeley.sdk.request.endpoint;
 import android.net.Uri;
 import android.util.JsonReader;
 
-import com.mendeley.sdk.AuthTokenManager;
+import com.mendeley.sdk.AuthManager;
 import com.mendeley.sdk.ClientCredentials;
 import com.mendeley.sdk.request.GetAuthorizedRequest;
 import com.mendeley.sdk.request.JsonParser;
@@ -29,8 +29,8 @@ public class DocumentTypesEndpoint {
     private static final String DOCUMENT_TYPES_CONTENT_TYPE = "application/vnd.mendeley-document-type.1+json";
 
     public static class GetDocumentTypesRequest extends GetAuthorizedRequest<Map<String, String>> {
-        public GetDocumentTypesRequest(AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
-            super(Uri.parse(DOCUMENT_TYPES_BASE_URL), authTokenManager, clientCredentials);
+        public GetDocumentTypesRequest(AuthManager authManager, ClientCredentials clientCredentials) {
+            super(Uri.parse(DOCUMENT_TYPES_BASE_URL), authManager, clientCredentials);
         }
 
         protected Map<String, String> manageResponse(InputStream is) throws JSONException, IOException {
