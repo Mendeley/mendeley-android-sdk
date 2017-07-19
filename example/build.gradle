@@ -6,7 +6,7 @@ dependencies {
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "22.0.1"
+    buildToolsVersion '25.0.0'
 
     sourceSets {
         main {
@@ -16,5 +16,14 @@ android {
 
     lintOptions {
         abortOnError false
+    }
+
+
+    productFlavors{
+        staging{
+
+        }
+        production{
+        }
     }
 }

@@ -8,6 +8,7 @@ import com.mendeley.sdk.model.AlternativeName;
 import com.mendeley.sdk.model.Annotation;
 import com.mendeley.sdk.model.Discipline;
 import com.mendeley.sdk.model.Document;
+import com.mendeley.sdk.model.Editorship;
 import com.mendeley.sdk.model.Education;
 import com.mendeley.sdk.model.Employment;
 import com.mendeley.sdk.model.File;
@@ -45,7 +46,7 @@ public class JsonParser {
 
         reader.beginObject();
 
-        while (reader.hasNext()){
+        while (reader.hasNext()) {
 
             final String key = reader.nextName();
             if (key.equals("id")) {
@@ -74,6 +75,9 @@ public class JsonParser {
 
             } else if (key.equals("title")) {
                 builder.setTitle(reader.nextString());
+
+            } else if (key.equals("biography")) {
+                builder.setBiography(reader.nextString());
 
             } else if (key.equals("research_interests")) {
                 builder.setResearchInterests(reader.nextString());
@@ -104,6 +108,12 @@ public class JsonParser {
 
             } else if (key.equals("institution_details")) {
                 builder.setInstitutionDetails(institutionFromJson(reader));
+
+            } else if (key.equals("editorships")) {
+                builder.setEditorships(editorshipsFromJsonFromJson(reader));
+
+            } else if (key.equals("research_interests_list")) {
+                builder.setResearchInterestsList(stringListFromJson(reader));
 
             } else {
                 reader.skipValue();
@@ -174,7 +184,6 @@ public class JsonParser {
         reader.endObject();
         return new Group.Photo(original, standard, square);
     }
-
 
 
     public static List<Document> documentsFromJson(JsonReader reader) throws JSONException, IOException, ParseException {
@@ -972,7 +981,6 @@ public class JsonParser {
     }
 
 
-
     private static void appendDocumentTypeFromJson(JsonReader reader, Map<String, String> map) throws IOException {
         reader.beginObject();
 
@@ -1053,6 +1061,18 @@ public class JsonParser {
         return list;
     }
 
+    private static List<Editorship> editorshipsFromJsonFromJson(JsonReader reader) throws IOException, JSONException, ParseException {
+        final List<Editorship> list = new LinkedList<>();
+        reader.beginArray();
+
+        while (reader.hasNext()) {
+            list.add(editorshipFromJson(reader));
+        }
+
+        reader.endArray();
+        return list;
+    }
+
     public static List<Institution> institutionsFromJson(JsonReader reader) throws IOException, JSONException, ParseException {
         final List<Institution> list = new LinkedList<>();
         reader.beginArray();
@@ -1093,6 +1113,41 @@ public class JsonParser {
 
             } else if (key.equals("is_main_employment")) {
                 builder.setIsMainEmployment(reader.nextBoolean());
+
+            } else {
+                reader.skipValue();
+            }
+        }
+
+        reader.endObject();
+        return builder.build();
+    }
+
+    public static Editorship editorshipFromJson(JsonReader reader) throws JSONException, IOException, ParseException {
+        final Editorship.Builder builder = new Editorship.Builder();
+        reader.beginObject();
+
+        while (reader.hasNext()) {
+
+            final String key = reader.nextName();
+
+            if (key.equals("id")) {
+                builder.setId(reader.nextString());
+
+            } else if (key.equals("created")) {
+                builder.setCreated(DateUtils.parseYearMonthDayDate(reader.nextString()));
+
+            } else if (key.equals("position")) {
+                builder.setPosition(reader.nextString());
+
+            } else if (key.equals("journal")) {
+                builder.setJournal(reader.nextString());
+
+            } else if (key.equals("start_date")) {
+                builder.setStartDate(DateUtils.parseYearMonthDayDate(reader.nextString()));
+
+            } else if (key.equals("end_date")) {
+                builder.setEndDate(DateUtils.parseYearMonthDayDate(reader.nextString()));
 
             } else {
                 reader.skipValue();

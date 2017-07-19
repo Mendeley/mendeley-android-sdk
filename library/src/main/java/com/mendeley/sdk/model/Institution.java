@@ -40,12 +40,12 @@ public class Institution implements Parcelable{
                     .setParentId(ParcelableUtils.readOptionalStringFromParcel(in))
                     .setProfilerUrl(ParcelableUtils.readOptionalStringFromParcel(in));
 
-            final List<String> urls = new ArrayList<>();
+            final ArrayList<String> urls = new ArrayList<>();
             in.readStringList(urls);
             builder.setUrls(urls);
 
-            final List<AlternativeName> alternativeNames = new ArrayList<>();
-            in.readList(urls, AlternativeName.class.getClassLoader());
+            final ArrayList<AlternativeName> alternativeNames = new ArrayList<>();
+            in.readTypedList(alternativeNames, AlternativeName.CREATOR);
             builder.setAltNames(alternativeNames);
 
             return builder.build();
@@ -72,8 +72,8 @@ public class Institution implements Parcelable{
         ParcelableUtils.writeOptionalStringToParcel(parcel, country);
         ParcelableUtils.writeOptionalStringToParcel(parcel, parentId);
         ParcelableUtils.writeOptionalStringToParcel(parcel, profilerUrl);
-        parcel.writeList(urls);
-        parcel.writeList(altNames);
+        parcel.writeStringList(urls);
+        parcel.writeTypedList(altNames);
     }
 
     public Institution(

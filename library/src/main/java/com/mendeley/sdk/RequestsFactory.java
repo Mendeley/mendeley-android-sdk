@@ -457,5 +457,12 @@ public interface RequestsFactory {
      */
     Request<List<Document>> newGetCatalogDocument(String identifier, String value);
 
+    /**
+     * Obtains a {@link Document} if found in the catalog with the given document id
+     *
+     * @return the request
+     */
+    Request<List<Document>> newGetCatalogDocument(String documentId);
+
 
 }

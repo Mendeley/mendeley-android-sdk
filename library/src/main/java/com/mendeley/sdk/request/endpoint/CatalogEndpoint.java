@@ -35,13 +35,24 @@ import static com.mendeley.sdk.Request.MENDELEY_API_BASE_URL;
  */
 public class CatalogEndpoint {
 
-	public static final String CATALOG_BASE_URL = MENDELEY_API_BASE_URL + "catalog";
+    public static final String CATALOG_BASE_URL = MENDELEY_API_BASE_URL + "catalog";
     public static final String CATALOG_CONTENT_TYPE = "application/vnd.mendeley-document.1+json";
 
     public static class GetCatalogDocumentRequest extends GetAuthorizedRequest<List<Document>> {
 
         private static Uri getGetCatalogDocumentUrl(String identifier, String value) {
             return Uri.parse(CATALOG_BASE_URL).buildUpon().appendQueryParameter(identifier, value).build();
+        }
+
+        private static Uri getGetCatalogDocumentUrl(String documentId) {
+            return Uri.parse(CATALOG_BASE_URL).buildUpon()
+                    .appendQueryParameter("document_id", documentId)
+                    .appendQueryParameter("view", "stats")
+                    .build();
+        }
+
+        public GetCatalogDocumentRequest(String documentId, AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {
+            super(getGetCatalogDocumentUrl(documentId), authTokenManager, clientCredentials);
         }
 
         public GetCatalogDocumentRequest(String identifier, String value, AuthTokenManager authTokenManager, ClientCredentials clientCredentials) {

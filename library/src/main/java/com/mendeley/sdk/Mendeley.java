@@ -492,6 +492,11 @@ public class Mendeley {
         public Request<List<Document>> newGetCatalogDocument(String identifier, String value) {
             return new CatalogEndpoint.GetCatalogDocumentRequest(identifier, value, authTokenManager, clientCredentials);
         }
+
+        @Override
+        public Request<List<Document>> newGetCatalogDocument(String documentId) {
+            return new CatalogEndpoint.GetCatalogDocumentRequest(documentId, authTokenManager, clientCredentials);
+        }
     }
 
 

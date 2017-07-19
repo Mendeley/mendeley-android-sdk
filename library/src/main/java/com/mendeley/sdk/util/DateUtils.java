@@ -39,7 +39,9 @@ public class DateUtils {
     }
 
     public static Date parseYearMonthDayDate(String date) throws ParseException {
-        return yearMonthDateDateFormat.parse(date);
+        synchronized (yearMonthDateDateFormat) {
+            return yearMonthDateDateFormat.parse(date);
+        }
     }
 
     public static String formatYearMonthDayDate(Date date) {

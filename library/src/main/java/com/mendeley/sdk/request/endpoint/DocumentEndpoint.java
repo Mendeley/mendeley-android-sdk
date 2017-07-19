@@ -187,6 +187,11 @@ public class DocumentEndpoint {
         public String groupId;
 
         /**
+         * Profile ID. If not supplied, returns user documents.
+         */
+        public String profileId;
+
+        /**
          * Returns only documents modified since this timestamp. Should be supplied in ISO 8601 format.
          */
         public Date modifiedSince;
@@ -202,6 +207,11 @@ public class DocumentEndpoint {
         public Integer limit;
 
         /**
+         * Whether or not the document was authored by the profile id user
+         */
+        public Boolean authored;
+
+        /**
          * The sort order.
          */
         public Order order;
@@ -212,7 +222,7 @@ public class DocumentEndpoint {
         public Sort sort;
 
 
-        Uri appendToUi(Uri uri) {
+        public Uri appendToUi(Uri uri) {
             final Uri.Builder bld = uri.buildUpon();
 
             if (view != null) {
@@ -221,11 +231,17 @@ public class DocumentEndpoint {
             if (groupId != null) {
                 bld.appendQueryParameter("group_id", groupId);
             }
+            if (profileId != null) {
+                bld.appendQueryParameter("profile_id", profileId);
+            }
             if (modifiedSince != null) {
                 bld.appendQueryParameter("modified_since", DateUtils.formatMendeleyApiTimestamp(modifiedSince));
             }
             if (limit != null) {
                 bld.appendQueryParameter("limit", String.valueOf(limit));
+            }
+            if (authored != null) {
+                bld.appendQueryParameter("authored", String.valueOf(authored));
             }
             if (order != null) {
                 bld.appendQueryParameter("order", order.getValue());
