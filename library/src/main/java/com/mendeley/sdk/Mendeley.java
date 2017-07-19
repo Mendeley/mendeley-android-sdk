@@ -68,7 +68,6 @@ public class Mendeley {
 
     private static Mendeley instance;
 
-    private ClientCredentials clientCredentials;
     private AuthManager authManager;
     private RequestsFactory requestsFactory;
 
@@ -94,13 +93,17 @@ public class Mendeley {
      * @param appSecret, valid client app secret
      */
     public final void init(Context context, String appId, String appSecret) {
-        this.clientCredentials = new ClientCredentials(appId, appSecret);
-        this.authManager = SharedPreferencesAuthManager.obtain(context);
-        this.requestsFactory = new RequestFactoryImpl(authManager, clientCredentials);
+        this.authManager = SharedPreferencesAuthManager.obtain(context, new ClientCredentials(appId, appSecret));
+        initRequetsFactory(authManager);
     }
 
     public final void init(AuthManager authManager) {
         this.authManager = authManager;
+        initRequetsFactory(authManager);
+    }
+
+
+    private void initRequetsFactory(AuthManager authManager) {
         this.requestsFactory = new RequestFactoryImpl(authManager, authManager.getClientCredentials());
     }
 
@@ -206,7 +209,7 @@ public class Mendeley {
      * in the {@link Mendeley#init(Context, String, String)} method
      */
     public ClientCredentials getClientCredentials() {
-        return clientCredentials;
+        return authManager.getClientCredentials();
     }
 
     /**
@@ -524,15 +527,16 @@ public class Mendeley {
         private static final String EXPIRES_AT_KEY = "expiresAtDate";
         private static final String TOKEN_TYPE_KEY = "tokenType";
 
-        public static SharedPreferencesAuthManager obtain(Context context) {
-            return new SharedPreferencesAuthManager(context.getSharedPreferences(SharedPreferencesAuthManager.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE));
+        public static SharedPreferencesAuthManager obtain(Context context, ClientCredentials clientCredentials) {
+            return new SharedPreferencesAuthManager(context.getSharedPreferences(SharedPreferencesAuthManager.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE), clientCredentials);
         }
 
-
         private final SharedPreferences preferences;
+        private final ClientCredentials clientCredentials;
 
-        public SharedPreferencesAuthManager(SharedPreferences preferences) {
+        public SharedPreferencesAuthManager(SharedPreferences preferences, ClientCredentials clientCredentials) {
             this.preferences = preferences;
+            this.clientCredentials = clientCredentials;
         }
 
         @SuppressLint("CommitPrefEdits")
@@ -566,7 +570,7 @@ public class Mendeley {
 
         @Override
         public ClientCredentials getClientCredentials() {
-            return null;
+            return clientCredentials;
         }
 
         @Override
