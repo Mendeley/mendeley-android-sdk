@@ -1,6 +1,9 @@
 package com.mendeley.sdk.testUtils;
 
+import android.app.Activity;
+
 import com.mendeley.sdk.AuthManager;
+import com.mendeley.sdk.ClientCredentials;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -31,6 +34,16 @@ public class InMemoryAuthManager implements AuthManager {
     @Override
     public void clearTokens() {
         accessToken = null;
+    }
+
+    @Override
+    public void startSignInFlow(Activity activity) {
+        
+    }
+
+    @Override
+    public ClientCredentials getClientCredentials() {
+        return null;
     }
 
 
