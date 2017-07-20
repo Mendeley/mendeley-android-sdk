@@ -192,6 +192,23 @@ public class Mendeley {
         return isValidToken(authManager.getAccessToken()) && isValidToken(authManager.getRefreshToken());
     }
 
+    public final boolean isSignedIn(Context context) {
+        assertInitialised();
+
+        boolean isSignIn = isValidToken(authManager.getAccessToken()) && isValidToken(authManager.getRefreshToken());
+        if (authManager instanceof SharedPreferencesAuthManager) {
+            return isSignIn;
+        } else {
+            final AuthManager sdkAuthManager = SharedPreferencesAuthManager.obtain(context, new ClientCredentials(authManager.getClientCredentials().clientId, authManager.getClientCredentials().clientSecret));
+            boolean isSignInWithSDKAuth = isValidToken(sdkAuthManager.getAccessToken()) && isValidToken(sdkAuthManager.getRefreshToken());
+            if (isSignInWithSDKAuth) {
+                return true;
+            } else {
+                return isSignIn;
+            }
+        }
+    }
+
     private boolean isValidToken(String token) {
         return !TextUtils.isEmpty(token) && !"null".equals(token);
     }
