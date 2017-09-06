@@ -4,6 +4,7 @@ package com.mendeley.sdk.request.endpoint;
 import android.net.Uri;
 
 import com.mendeley.sdk.AuthManager;
+import com.mendeley.sdk.BuildConfig;
 import com.mendeley.sdk.ClientCredentials;
 import com.mendeley.sdk.Request;
 import com.mendeley.sdk.exceptions.HttpResponseException;
@@ -30,7 +31,7 @@ public class OAuthTokenEndpoint {
 
     public final static String TOKENS_URL = Request.MENDELEY_API_BASE_URL + "/oauth/token";
     public final static String AUTHORIZATION_URL = Request.MENDELEY_API_BASE_URL + "oauth/authorize";
-    public final static String REDIRECT_URI = "http://localhost/auth_return";
+    public final static String REDIRECT_URI = BuildConfig.REDIRECT_URI;
 
     /**
      * Base class for every {@link Request} related to the OAuth process.
@@ -65,7 +66,7 @@ public class OAuthTokenEndpoint {
                     formBodyBld.add(key, oauthParams.get(key));
                 }
 
-                final RequestBody postBody  = formBodyBld.build();
+                final RequestBody postBody = formBodyBld.build();
 
                 okhttp3.Request okHttpRequest = new okhttp3.Request.Builder()
                         .url(url.toString())

@@ -41,9 +41,11 @@ android {
     productFlavors{
         staging{
             buildConfigField 'String', 'WEB_API_BASE_URL', '\"https://api-staging.mendeley.com/\"'
+            buildConfigField 'String', 'REDIRECT_URI', '\"http://localhost/auth_return\"'
         }
         production{
             buildConfigField 'String', 'WEB_API_BASE_URL', '\"https://api.mendeley.com/\"'
+            buildConfigField 'String', 'REDIRECT_URI', '\"https://mendeley.com/callback/\"'
         }
     }
 
