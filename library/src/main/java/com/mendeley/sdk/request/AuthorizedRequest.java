@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.mendeley.sdk.AuthTokenManager;
 import com.mendeley.sdk.ClientCredentials;
 import com.mendeley.sdk.Request;
+import com.mendeley.sdk.exceptions.DeletedMendeleyUserException;
 import com.mendeley.sdk.exceptions.HttpResponseException;
 import com.mendeley.sdk.exceptions.MendeleyException;
 import com.mendeley.sdk.request.endpoint.OAuthTokenEndpoint;
@@ -48,13 +49,15 @@ public abstract class AuthorizedRequest<ResultType> extends Request<ResultType> 
             throw new MendeleyException("No access token found");
         }
 
-        if (willExpireSoon()) {
-            refreshExpiredToken();
-        }
         try {
+            if (willExpireSoon()) {
+                refreshExpiredToken();
+            }
             return doRunAuthorized();
         } catch (HttpResponseException e) {
-            if (e.httpReturnCode == 401 && e.getMessage().contains("Token has expired")) {
+            if (e.httpReturnCode == 400 && e.getMessage().contains("Incorrect username or password")) {
+                throw new DeletedMendeleyUserException("User deleted");
+            } else if (e.httpReturnCode == 401 && e.getMessage().contains("Token has expired")) {
                 // The refresh-token-in-advance logic did not work for some reason: force a refresh now
                 refreshExpiredToken();
                 return doRunAuthorized();
