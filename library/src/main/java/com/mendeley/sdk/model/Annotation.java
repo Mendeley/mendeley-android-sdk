@@ -261,6 +261,15 @@ public class Annotation {
         }
 
         @Override
+        public String toString() {
+            return "Position{" +
+                    "topLeft=" + topLeft +
+                    ", bottomRight=" + bottomRight +
+                    ", page=" + page +
+                    '}';
+        }
+
+        @Override
         public int hashCode() {
             int result = topLeft != null ? topLeft.hashCode() : 0;
             result = 31 * result + (bottomRight != null ? bottomRight.hashCode() : 0);

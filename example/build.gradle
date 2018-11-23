@@ -1,12 +1,15 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    compile project(path: ':mendeley_sdk')
+    implementation project(path: ':mendeley_sdk')
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    defaultConfig {
+        minSdkVersion 19
+    }
+    buildToolsVersion '27.0.3'
 
     sourceSets {
         main {

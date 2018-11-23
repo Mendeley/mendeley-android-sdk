@@ -8,23 +8,23 @@ configurations {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: '*.jar')
-    compile 'com.squareup.okhttp3:okhttp:3.1.2'
+    implementation fileTree(dir: 'libs', include: '*.jar')
+    api 'com.squareup.okhttp3:okhttp:3.10.0'
 
     // Dependencies of the unit tests
     // Reference: https://plus.google.com/+AndroidDevelopers/posts/Xw8qbKRwMxx
-    androidTestCompile ('org.skyscreamer:jsonassert:1.2.3') {
+    androidTestImplementation ('org.skyscreamer:jsonassert:1.2.3') {
         exclude group: 'org.json', module: 'json'
     }
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 23
+        minSdkVersion 19
+        targetSdkVersion 27
     }
 
     sourceSets {
