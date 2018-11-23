@@ -13,7 +13,7 @@ dependencies {
 
     // Dependencies of the unit tests
     // Reference: https://plus.google.com/+AndroidDevelopers/posts/Xw8qbKRwMxx
-    androidTestCompile ('org.skyscreamer:jsonassert:1.2.3') {
+    androidTestImplementation ('org.skyscreamer:jsonassert:1.2.3') {
         exclude group: 'org.json', module: 'json'
     }
 }
