@@ -1,0 +1,11 @@
+Mendeley-Team: Mobile
+Mendeley-Types: 
+Mendeley-Slack: #mobile
+Mendeley-Name: 
+Mendeley-Description: 
+Mendeley-Zookeeper: 
+Mendeley-Secrets: 
+Mendeley-Runbook: 
+Mendeley-Database: 
+Mendeley-Notes: 
+
