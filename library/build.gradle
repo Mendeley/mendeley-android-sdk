@@ -36,8 +36,6 @@ android {
         abortOnError false
     }
 
-    // Ref: http://stackoverflow.com/questions/24860659/multi-flavor-app-based-on-multi-flavor-library-in-android-gradle
-    publishNonDefault true
     flavorDimensions "default"
 
     productFlavors{
