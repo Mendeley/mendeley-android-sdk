@@ -1,6 +1,10 @@
 # This repository has been DEPRECATED by the owner. # 
-# This repository will be ARCHIVED by the owner on 15th March 2021. # 
-# This repository will become READ-ONLY on 15th March 2021. # 
+
+# This repository will be ARCHIVED by the owner # 
+# on 15th March 2021. # 
+
+# This repository will become READ-ONLY # 
+# on 15th March 2021. # 
 
 # Mendeley Android SDK #
 
