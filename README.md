@@ -1,3 +1,7 @@
+# This repository has been DEPRECATED by the owner # 
+# This repository will be ARCHIVED by the owner # 
+# This repository will become READ-ONLY # 
+
 # Mendeley Android SDK #
 
 Version: Alpha-2

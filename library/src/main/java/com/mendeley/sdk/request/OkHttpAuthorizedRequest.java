@@ -2,8 +2,8 @@ package com.mendeley.sdk.request;
 
 import android.net.Uri;
 
-import com.mendeley.sdk.ClientCredentials;
 import com.mendeley.sdk.AuthTokenManager;
+import com.mendeley.sdk.ClientCredentials;
 import com.mendeley.sdk.Request;
 import com.mendeley.sdk.exceptions.HttpResponseException;
 import com.mendeley.sdk.exceptions.MendeleyException;

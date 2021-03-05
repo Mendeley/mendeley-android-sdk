@@ -28,7 +28,7 @@ import okhttp3.ResponseBody;
  */
 public class OAuthTokenEndpoint {
 
-    public final static String TOKENS_URL = Request.MENDELEY_API_BASE_URL + "/oauth/token";
+    public final static String TOKENS_URL = Request.MENDELEY_API_BASE_URL + "oauth/token";
     public final static String AUTHORIZATION_URL = Request.MENDELEY_API_BASE_URL + "oauth/authorize";
     public final static String REDIRECT_URI = "http://localhost/auth_return";
 

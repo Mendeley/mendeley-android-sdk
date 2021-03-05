@@ -1,23 +1,30 @@
 apply plugin: 'com.android.library'
 
+configurations {
+    stagingDebug
+    stagingRelease
+    productionDebug
+    productionRelease
+}
+
 dependencies {
-    compile fileTree(dir: 'libs', include: '*.jar')
-    compile 'com.squareup.okhttp3:okhttp:3.1.2'
+    implementation fileTree(dir: 'libs', include: '*.jar')
+    api 'com.squareup.okhttp3:okhttp:3.10.0'
 
     // Dependencies of the unit tests
     // Reference: https://plus.google.com/+AndroidDevelopers/posts/Xw8qbKRwMxx
-    androidTestCompile ('org.skyscreamer:jsonassert:1.2.3') {
+    androidTestImplementation ('org.skyscreamer:jsonassert:1.2.3') {
         exclude group: 'org.json', module: 'json'
     }
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '25.0.0'
+
+    compileSdkVersion 29
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 25
+        minSdkVersion 21
+        targetSdkVersion 29
     }
 
     sourceSets {
@@ -29,13 +36,15 @@ android {
         abortOnError false
     }
 
-    // Ref: http://stackoverflow.com/questions/24860659/multi-flavor-app-based-on-multi-flavor-library-in-android-gradle
-    publishNonDefault true
+    flavorDimensions "default"
+
     productFlavors{
         staging{
+            dimension "default"
             buildConfigField 'String', 'WEB_API_BASE_URL', '\"https://api-staging.mendeley.com/\"'
         }
         production{
+            dimension "default"
             buildConfigField 'String', 'WEB_API_BASE_URL', '\"https://api.mendeley.com/\"'
         }
     }

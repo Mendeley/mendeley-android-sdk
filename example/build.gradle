@@ -1,12 +1,17 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    compile project(path: ':mendeley_sdk', configuration: 'productionRelease')
+    implementation project(path: ':mendeley_sdk')
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '25.0.0'
+    compileSdkVersion 29
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 29
+    }
+
+    buildToolsVersion '29.0.3'
 
     sourceSets {
         main {
@@ -19,11 +24,14 @@ android {
     }
 
 
+    flavorDimensions "default"
+
     productFlavors{
         staging{
-
+            dimension "default"
         }
         production{
+            dimension "default"
         }
     }
 }
